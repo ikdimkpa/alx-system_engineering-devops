@@ -1,2 +1,2 @@
-i#!/bin/bash
-\ls -a --file-type --format=commas
+#!/bin/bash
+ls -a --file-type --format=commas

@@ -9,7 +9,7 @@ i=1
 
 while [ $i -le 100 ]
 do
-	if ( $i % 3 == 0 -a $i % 5 == 0 )
+	if (( i % 3 == 0 && i % 5 == 0 ))
 	then
 		echo "FizzBuzz"
 	elif (( i % 3 == 0 ))
@@ -20,6 +20,6 @@ do
 		echo "Buzz"
 	else
 		echo "$i"
-	(( ++i ))
 	fi
+	(( ++i ))
 done

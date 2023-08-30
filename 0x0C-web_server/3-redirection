@@ -1,8 +1,23 @@
 #!/usr/bin/env bash
-# Script to install/configure Nginx web server
+# Bash script to configures Nginx server so that /redirect_me is redirecting
+# to another page.
 
-sudo apt-get update -y && sudo apt-get install -y nginx
+# Install Nginx and allow it to listen on port 80
+sudo apt-get update
+sudo apt-get install nginx -y
+sudo ufw 'Nginx HTTP'
 
+<<<<<<< HEAD
+# Write Hello World! into a file named index.html
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Configure it to listen at port 80
+echo "server {
+	listen 80;
+	listen[::]:80 default_server;
+	root /etc/nginx/html;
+	index index.html index.htm;
+=======
 # configure Nginx
 sudo sed -i 's/80 default_server/80/' /etc/nginx/sites-available/default
 
@@ -16,6 +31,15 @@ printf %s "server {
     location /redirect_me {
         return 301 https://stackoverflow.com/;
     }
+>>>>>>> 5793a229e996ce85f03617deaa241ebf7c3bde00
 }" > /etc/nginx/sites-available/default
 
-service nginx restart
+# Check if the previous command disrupted Nginx configuration
+sudo nginx -t
+
+# Edits the configuration file of nginx
+tag="\\\n\tlocation \/redirect_me {\n\t\treturn 301 http:\/\/www.google.com;\n\t}"
+sed -i "7i $tag" /etc/nginx/sites-available/default
+
+# Reload Nginx
+sudo service nginx reload

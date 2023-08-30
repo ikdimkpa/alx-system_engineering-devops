@@ -15,7 +15,7 @@ fi
 
 	# Disabling strict host key checking
 
-	ssh -o "StrictHostKeyChecking=no" -i "$key_path" "$file_path" "$username@$ip:~/"
+	ssh -o "StrictHostKeyChecking no" -i "$key_path" "$file_path" "$username@$ip:~/"
 
 	# Checks if transfer was successful
 

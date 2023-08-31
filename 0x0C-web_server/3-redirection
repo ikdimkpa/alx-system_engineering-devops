@@ -2,44 +2,16 @@
 # Bash script to configures Nginx server so that /redirect_me is redirecting
 # to another page.
 
-# Install Nginx and allow it to listen on port 80
+# Install nginx
 sudo apt-get update
-sudo apt-get install nginx -y
-sudo ufw 'Nginx HTTP'
+sudo apt-get install -y nginx
 
-<<<<<<< HEAD
-# Write Hello World! into a file named index.html
-echo "Hello World!" | sudo tee /var/www/html/index.html
+# Creating Sample Page
+echo "Hello World!" > /var/www/html/index.html
 
-# Configure it to listen at port 80
-echo "server {
-	listen 80;
-	listen[::]:80 default_server;
-	root /etc/nginx/html;
-	index index.html index.htm;
-=======
-# configure Nginx
-sudo sed -i 's/80 default_server/80/' /etc/nginx/sites-available/default
+# add the following configuration to the existing server block
+string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.youtube.com/@themathsclub permanent;"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
-# create index.html page served by server and configure the redirection
-echo 'Hello World!' > /etc/nginx/html/index.html
-printf %s "server {
-    listen 80;
-    listen [::]:80 default_server;
-    root   /etc/nginx/html;
-    index  index.html index.htm;
-    location /redirect_me {
-        return 301 https://stackoverflow.com/;
-    }
->>>>>>> 5793a229e996ce85f03617deaa241ebf7c3bde00
-}" > /etc/nginx/sites-available/default
-
-# Check if the previous command disrupted Nginx configuration
-sudo nginx -t
-
-# Edits the configuration file of nginx
-tag="\\\n\tlocation \/redirect_me {\n\t\treturn 301 http:\/\/www.google.com;\n\t}"
-sed -i "7i $tag" /etc/nginx/sites-available/default
-
-# Reload Nginx
-sudo service nginx reload
+# Restart Nginx
+sudo service nginx restart

@@ -1,6 +1,6 @@
 #puppet to install & configure Nginx
 package { 'nginx':
-   ensure => installed,
+   ensure => 'present',
 }
 
 file_line { 'server_config':

@@ -32,4 +32,4 @@ var="\\\n\terror_page 404 /404.html;\n\tlocation /404.html {\n\t\troot /usr/shar
 sed -i "11i $var" /etc/nginx/sites-available/default
 
 # Reload Nginx
-sudo service nginx reload
+sudo service nginx restart

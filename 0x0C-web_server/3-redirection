@@ -2,10 +2,9 @@
 # Bash script to configures Nginx server so that /redirect_me is redirecting
 # to another page.
 
-# Install Nginx and allow it to listen on port 80
+# Install nginx
 sudo apt-get update
-sudo apt-get install nginx -y
-sudo ufw 'Nginx HTTP'
+sudo apt-get install -y nginx
 
 # Write Hello World! into a file named index.html
 echo "Hello World!" | sudo tee /var/www/html/index.html
@@ -41,4 +40,12 @@ tag="\\\n\tlocation \/redirect_me {\n\t\treturn 301 http:\/\/www.google.com;\n\t
 sed -i "7i $tag" /etc/nginx/sites-available/default
 
 # Reload Nginx
+# Creating Sample Page
+echo "Hello World!" > /var/www/html/index.html
+
+# add the following configuration to the existing server block
+string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.youtube.com/@themathsclub permanent;"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+
+# Restart Nginx
 sudo service nginx restart

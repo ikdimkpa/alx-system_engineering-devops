@@ -1,6 +1,6 @@
 # Changes the wrong spelling 'phpp' extensions to 'php' the settings file 'wp-settings.php'.
 
-exec { 'fix-wordpress':
-  command => 'sed -i s/phpp/php/g var/www/html/wp-settings.php',
-  path    => '/usr/local/bin:/bin/'
+file { '/var/www/html/wp-settings.php':
+  ensure  => present,
+  content => inline_template('<%= File.read("/var/www/html/wp-settings.php").gsub(/\.phpp/, ".php")  %>')
 }

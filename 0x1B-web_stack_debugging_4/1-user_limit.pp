@@ -1,9 +1,11 @@
-# Changes user limit 
-
-exec { 'change_value_to_50':
-  command => "/bin/sed -i s/5/50/g /etc/security/limits.conf",
+# Increases the hard file limit for the user holberton
+exec { 'increases-the-hard-file-limit-for-holberton-user':
+  command => 'sed -i "/holberton hard/s/5/50000/" /etc/security/limits.conf',
+  path    => '/usr/local/bin/:/bin/'
 }
 
-exec { 'change_value_to_40':
-  command => "/bin/sed -i s/4/40/g /etc/security/limits.conf",
+# Increases soft file limit for the user holberton
+exec { 'increases-the-soft-file-limit-for-holberton-user':
+  command => 'sed -i "/holberton soft/s/4/50000/" /etc/security/limits.conf',
+  path    => '/usr/local/bin/:/bin/'
 }

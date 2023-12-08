@@ -1,6 +1,11 @@
-# Fix "too many files open" error by setting the ULIMIT to a large enough value
+# This script increases the ULIMIT of the default file
+exec { 'fixes--nginx':
+  command => 'sed -i "s/15/4096/" /etc/default/nginx',
+  path    => '/usr/local/bin/:/bin/'
+}
 
-file { '/etc/default/nginx':
-  ensure  => file,
-  content => "ULIMIT='-n 2048'\n",
+# Restart Nginx
+-> exec { 'nginx-restart':
+  command => 'nginx restart',
+  path    => '/etc/init.d/'
 }
